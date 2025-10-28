@@ -5,13 +5,14 @@ import com.packt.accounting.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
+@CrossOrigin(origins = "*") // allow all origins for testing
 @RequestMapping("/api/users")
 public class UserController {
 
@@ -44,7 +45,7 @@ public class UserController {
     }
 
     // CREATE new user
-    @PostMapping
+    @PostMapping("/duplicate_user")
     public User createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
@@ -57,7 +58,7 @@ public class UserController {
     }
 
     // DELETE user
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
     }

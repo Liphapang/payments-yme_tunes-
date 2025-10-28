@@ -3,8 +3,10 @@ package com.packt.accounting.controller;
 import com.packt.accounting.service.CreditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
+@CrossOrigin(origins = "*") // allow all origins for testing
 @RequestMapping("/api/credits")
 public class CreditController {
 

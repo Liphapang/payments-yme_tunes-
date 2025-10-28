@@ -31,16 +31,16 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        String sql = "INSERT INTO users (username, email, password, role, credits_balance) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (username, email, password_hash, role, credits_balance) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, user.getUsername(), user.getEmail(), user.getPassword(), user.getRole(), user.getCreditsBalance());
         return user;
     }
 
-    public void deleteUser(int id) {
-        String sql = "DELETE FROM users WHERE user_id = ?";
-        jdbcTemplate.update(sql, id);
+    public boolean deleteUser(int id) {
+        String sql = "DELETE FROM users WHERE id = ?";
+        int rowsAffected = jdbcTemplate.update(sql, id);
+        return rowsAffected > 0;
     }
-
     // ========== NEW FEATURES =========1
     public Integer getUserIdByEmailOrUsername(String identifier) {
         String sql = "SELECT id FROM users WHERE email = ? OR username = ?";

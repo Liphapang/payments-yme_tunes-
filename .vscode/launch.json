@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AccountingApplication<accounting>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.packt.accounting.AccountingApplication",
+            "projectName": "accounting",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

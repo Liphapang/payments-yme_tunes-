@@ -81,30 +81,45 @@ public class SubscriptionService {
     }
 //This function will be used to find the subscription status of a certain personnel 
     public Map<String, Object> getSubscriptionByUser(int userId) {
-        // First, check for expiry
         updateExpiredSubscriptionsOnCheck();
-
-        String sql = "SELECT status FROM subscriptions WHERE consumer_id = ?";
-        return jdbcTemplate.queryForMap(sql, userId);
+        try {
+            String sql = "SELECT status, start_date, end_date FROM subscriptions WHERE consumer_id = ?";
+            return jdbcTemplate.queryForMap(sql, userId);
+        } catch (Exception e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("userId", userId);
+            response.put("status", "NONE");
+            response.put("message", "No subscription found.");
+            return response;
+        }
     }
+
     
 
     // -----------------------
     //2 use this fuction when checking whether the user has active subscription
     public boolean hasActiveSubscription(int userId) {
-        // First: deactivate expired subscriptions for this user
-        String deactivateSql = "UPDATE subscriptions " +
-                               "SET status = 'INACTIVE' " +
-                               "WHERE user_id = ? AND status = 'ACTIVE' AND end_date <= NOW()";
-        jdbcTemplate.update(deactivateSql, userId);
+        try {
+            // First: deactivate expired subscriptions for this user
+            String deactivateSql = "UPDATE subscriptions " +
+                                   "SET status = 'INACTIVE' " +
+                                   "WHERE consumer_id = ? AND status = 'ACTIVE' AND end_date <= NOW()";
+            jdbcTemplate.update(deactivateSql, userId);
 
-        // Then: check if an active subscription exists
-        String sql = "SELECT COUNT(*) FROM subscriptions " +
-                     "WHERE user_id = ? AND status = 'ACTIVE' AND end_date > NOW()";
-        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, userId);
+            // Then: check if an active subscription exists
+            String sql = "SELECT COUNT(*) FROM subscriptions " +
+                         "WHERE consumer_id = ? AND status = 'ACTIVE' AND end_date > NOW()";
 
-        return count != null && count > 0;
+            Integer count = jdbcTemplate.queryForObject(sql, Integer.class, userId);
+
+            return count != null && count > 0;
+        } catch (Exception e) {
+            System.err.println("Error checking subscription for userId=" + userId + ": " + e.getMessage());
+            return false;
+        }
     }
+
+
 
     // SCHEDULED EXPIRY TASK
     @Scheduled(fixedRate = 60 * 60 * 1000) // Runs every hour

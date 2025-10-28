@@ -4,11 +4,13 @@ import com.packt.accounting.model.Earnings;
 import com.packt.accounting.service.EarningsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "*") // allow all origins for testing
 @RequestMapping("/api/earnings")
 public class EarningsController {
 
