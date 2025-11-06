@@ -19,7 +19,7 @@ public class PayFastController {
      * Create a PayFast payment link with callback support
      * Example: POST http://localhost:8080/api/payments/payfast/initiate?amount=10&reference=TEST123&callbackUrl=https://your-app.com/callback
      */
-    @PostMapping("/initiate")
+    @GetMapping("/initiate")
     public String initiatePayment(
             @RequestParam String amount,
             @RequestParam String reference,
