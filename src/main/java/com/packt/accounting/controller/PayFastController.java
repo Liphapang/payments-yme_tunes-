@@ -23,8 +23,11 @@ public class PayFastController {
     public String initiatePayment(
             @RequestParam String amount,
             @RequestParam String reference,
-            @RequestParam String callbackUrl) {
-        return payFastService.initiatePayment(amount, reference, callbackUrl);
+            @RequestParam String callbackUrl,
+            @RequestParam String RETURN_URL,
+            @RequestParam String CANCEL_URL,
+            @RequestParam String NOTIFY_URL) {
+        return payFastService.initiatePayment(amount, reference, callbackUrl,RETURN_URL,CANCEL_URL,NOTIFY_URL);
     }
 
     /**
