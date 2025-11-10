@@ -19,9 +19,9 @@ public class PayFastService {
     // Sandbox merchant details MERCHANT_ID = "10041759"; MERCHANT_KEY = "ac6t0v9kw8raz";
     private static final String MERCHANT_ID = "14991361";
     private static final String MERCHANT_KEY = "jqrnx9f3yk5hy";
-    private static final String RETURN_URL = "https://www.example.com/success";
-    private static final String CANCEL_URL = "https://www.example.com/cancel";
-    private static final String NOTIFY_URL = "https://8649db391369.ngrok-free.app/api/payments/payfast/notify";
+   // private static final String RETURN_URL = "https://www.example.com/success";
+   // private static final String CANCEL_URL = "https://www.example.com/cancel";
+   // private static final String NOTIFY_URL = "https://8649db391369.ngrok-free.app/api/payments/payfast/notify";
     private static final String PAYFAST_URL = "https://www.payfast.co.za/eng/process";	
 
     // In-memory stores
@@ -32,7 +32,7 @@ public class PayFastService {
     /**
      * Generate the PayFast payment URL and store callback
      */
-    public String initiatePayment(String amount, String reference, String callbackUrl) {
+    public String initiatePayment(String amount, String reference, String callbackUrl,String RETURN_URL,String CANCEL_URL,String NOTIFY_URL) {
         callbackMap.put(reference, callbackUrl); // Store callback for later
 
         try {
